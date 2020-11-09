@@ -1,0 +1,29 @@
+html { scrollbar-arrow-color: #efefef;
+        scrollbar-Track-Color: #efefef; 
+        scrollbar-base-color: #dfdfdf;
+        scrollbar-Face-Color: #dfdfdf;
+        scrollbar-3dLight-Color: #dfdfdf;         
+        scrollbar-DarkShadow-Color: #dfdfdf;
+        scrollbar-Highlight-Color: #dfdfdf;
+        scrollbar-Shadow-Color: #dfdfdf}
+::-webkit-scrollbar {width: 6px; height: 12px;  }
+::-webkit-scrollbar-button:start:decrement, 
+::-webkit-scrollbar-button:end:increment {display: block; width: 6px;height: 12px; background: url() rgba(0,0,0,.05);}
+::-webkit-scrollbar-track {     background: rgba(0,0,0,.05); }
+::-webkit-scrollbar-thumb {  background: rgba(0,0,0,.1);  }
+
+#center_contents{
+	display:inline-block;
+	text-align:center;
+	margin-top:5px;
+	margin-bottom:10px;
+}
+#table_div{
+	display:inline-block;
+	border-bottom:1px solid silver;
+}
+.tr_style td{
+	border-bottom:1px solid silver;
+	padding-top:10px;
+	padding-bottom:10px;
+}

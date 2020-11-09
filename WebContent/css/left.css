@@ -1,0 +1,31 @@
+a{
+	text-decoration:none
+}
+#left_div{
+	float:left;
+	width:230px;
+}
+#main_div{
+	width:230px;
+	text-align:center;
+	color:white;
+	border:1px solid silver;
+	background:#485563;
+	padding-top:15px;
+	padding-bottom:15px;
+}
+.board_text{
+	width:230px;
+	border:1px solid silver;
+	color:black;
+	text-align:center;
+	padding-top:10px;
+	padding-bottom:10px;
+}
+.board_text:hover{
+	background:silver;
+}
+.board_text_font{
+	font-size:20px;
+	font-weight:bold;
+}

@@ -1,0 +1,37 @@
+#center_div{
+	margin-top:5px;
+	margin-bottom:10px;
+	width:350px;
+	border:1px solid silver;
+	display: inline-block;
+}
+.text_design{
+	width:250px;
+	height:30px;
+}
+.login_txt_div{
+	margin-top:5px;
+}
+#login_submit{
+	margin-top:15px;
+	margin-bottom:20px;
+	width:250px;
+	height:40px;
+	border:0;
+	outline:0;
+	background: #485563;
+	font-weight:bold;
+	color:white;
+	border-radius:10px;
+	text-decoration:none
+}
+#login_submit:hover{
+	background: #5a6470;
+	cursor:pointer;
+}
+.login_font{
+	float:none;
+	text-align:left;
+	color:black;
+	font-size:13px;
+}

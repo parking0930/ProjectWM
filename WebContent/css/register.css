@@ -1,0 +1,47 @@
+#center_contents{
+	display:inline-block;
+	width:450px;
+	border:1px solid silver;
+	text-align:center;
+	margin-top:5px;
+	margin-bottom:10px;
+}
+.box_div{
+	display:inline-block;
+	text-align:left;
+	width:400px;
+	height:220px;
+	border:1px solid silver;
+}
+.box_title_div{
+	width:400px;
+  	height:32px;
+  	background: #485563;
+}
+.checkbox_div{
+	text-align:left;
+	margin-left:25px;
+	margin-top:5px;
+	margin-bottom:10px;
+}
+#nextbtn{
+	margin-top:15px;
+	margin-bottom:20px;
+	width:220px;
+	height:35px;
+	border:0;
+	outline:0;
+	background: #485563;
+	font-weight:bold;
+	color:white;
+	border-radius:10px;
+	text-decoration:none
+}
+#nextbtn:hover{
+	background: #5a6470;
+	cursor:pointer;
+}
+.fonts{
+	font-size: 12px;
+	margin-left:5px;
+}

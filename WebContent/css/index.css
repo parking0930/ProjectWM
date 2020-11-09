@@ -1,0 +1,159 @@
+a{
+	text-decoration:none
+}
+#contents{
+	display: inline-block;
+	width:1000px;
+}
+#image_contents{
+	display: inline-block;
+	width:1000px;
+	height:300px;
+	background:gray;
+}
+#sub_contents{
+	margin-top:5px;
+	width:1000px;
+	height:220px;
+	margin-bottom: 17px;
+}
+.board_class{
+	width:330px;
+	height:220px;
+	margin-right:10px;
+	float:left;
+}
+.board_logo{
+	width:330px;
+	height:32px;
+  	text-align:left;
+  	background: #485563;
+}
+.board_div{
+	width:308px;
+	height:180px;
+	border: 1px solid silver;
+	text-align:left;
+	padding: 8px 10px 8px 10px;
+}
+.board_div_text{
+	font-size:14px;
+	color:black;
+	margin-bottom:5px;
+}
+.text_dot{
+	font-size:14px;
+	color:black;
+	margin-bottom:5px;
+}
+.board_div_text:hover{
+	color:blue;
+}
+#right_contents{
+	float:left;
+	width:310px;
+	height:220px;
+}
+#login_div{
+	width:310px;
+	padding-top:15px;
+	padding-bottom:15px;
+	border:1px solid silver;
+}
+#login_button_design{
+	margin-top:5px;
+	margin-bottom:5px;
+	width:280px;
+	height:50px;
+	border:0;
+	outline:0;
+	background: #485563;
+	font-weight:bold;
+	color:white;
+	border-radius:10px;
+	text-decoration:none
+}
+#login_button_design:hover{
+	background: #5a6470;
+	cursor:pointer;
+}
+.login_font{
+	float:none;
+	text-align:left;
+	color:black;
+	font-size:13px;
+}
+#gamestart_div{
+	margin-top:5px;
+	width:310px;
+	height:80px;
+}
+#btnGamestart{
+	width:310px;
+	height:80px;
+	font-size:40px;
+	font-weight:bold;
+	color:white;
+	background:black;
+	border:0;
+	outline:0;
+}
+#btnGamestart:hover{
+	cursor:pointer;
+	background:gray;
+}
+#client_div{
+	width:310px;
+	height:135px;
+	border: 3px solid #485563;
+	border-radius:10px;
+}
+#clint_profile_div{
+	float:left;
+	margin-left:40px;
+	padding-top:20px;
+	padding-bottom:20px;
+}
+#client_info{
+	float:left;
+	text-align:left;
+	margin-left: 20px;
+	padding-top:25px;
+	padding-bottom:20px;
+}
+.client_font{
+	margin-bottom:3px;
+	font-size: 14px;
+	color:black;
+}
+#logout_btn{
+	margin-top:5px;
+	width:100px;
+	height:28px;
+	border:0;
+	outline:0;
+	background: #485563;
+	font-weight:bold;
+	color:white;
+	border-radius:10px;
+	text-decoration:none
+}
+#logout_btn:hover{
+	background: #5a6470;
+	cursor:pointer;
+}
+.board_title{
+    position: absolute;
+    font-weight: bold;
+    color: white;
+    font-size: 14px;
+    margin-left: 10px;
+    margin-top: 6.5px;
+}
+.board_link{
+      position: absolute;
+      color: white;
+      font-size: 11px;
+      margin-left: 265px;
+      margin-top: 8.5px;
+}

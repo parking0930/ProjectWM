@@ -1,0 +1,17 @@
+p {white-space: nowrap;margin:0px;padding:0px;}
+#footer{
+	width:1000px;
+	height:90px;
+	background:#E9E9E9;
+	display: inline-block;
+	text-align:center;
+}
+#footMainFont{
+	font-size:13px;
+	margin-top:9px;
+	font-weight:bold;
+}
+.footFont{
+	font-size:12px;
+	margin-top:2px;
+}
