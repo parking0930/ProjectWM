@@ -34,9 +34,11 @@
 				</div>
 				<div class="board_div">
 					<!-- 게시글 내용  최대 8개 -->
-				<%for(int i=0;i<noticeArray.size();i++){ %>
-					<p class="text_dot">· <a class="board_div_text" href="#"><%=noticeArray.get(i).split("\\|")[0] %></a>
-					<%if(sdf.format(date).equals(noticeArray.get(i).split("\\|")[1].split(" ")[0])){ %>
+				<%for(int i=0;i<noticeArray.size();i++){
+					String[] strArr = noticeArray.get(i).split("\\|");
+				%>
+					<p class="text_dot">· <a class="board_div_text" href="./boardContents.jsp?board=notice&id=<%=strArr[0]%>"><%=strArr[1] %></a>
+					<%if(sdf.format(date).equals(strArr[2].split(" ")[0])){ %>
 						<img style="width:10px;height:10px;" src="image/new.png">
 					<%}%>
 					</p>
@@ -50,9 +52,11 @@
 				</div>
 				<div class="board_div">
 					<!-- 게시글 내용  최대 8개 -->
-				<%for(int i=0;i<freeArray.size();i++){ %>
-					<p class="text_dot">· <a class="board_div_text" href="#"><%=freeArray.get(i).split("\\|")[0] %></a>
-					<%if(sdf.format(date).equals(freeArray.get(i).split("\\|")[1].split(" ")[0])){ %>
+				<%for(int i=0;i<freeArray.size();i++){
+					String[] strArr = freeArray.get(i).split("\\|");
+				%>
+					<p class="text_dot">· <a class="board_div_text" href="./boardContents.jsp?board=free&id=<%=strArr[0]%>"><%=strArr[1] %></a>
+					<%if(sdf.format(date).equals(strArr[2].split(" ")[0])){ %>
 						<img style="width:10px;height:10px;" src="image/new.png">
 					<%}%>
 					</p>
@@ -72,7 +76,7 @@
 				</div>
 				<%}else{ %>
 				<div id="client_div">
-					<div id="clint_profile_div"><img style="width:90px;height:90px;border-radius:50%;border:0.5px solid black;" src="image/profile/<%=session.getAttribute("profile") %>"></div>
+					<div id="clint_profile_div"><img style="width:90px;height:90px;border-radius:50%;" src="image/profile/<%=session.getAttribute("profile") %>"></div>
 					<div id="client_info">
 						<font class="client_font" style="font-weight:bold;font-size:15px;">Lv.<%=session.getAttribute("level")%> <%=session.getAttribute("nickname") %></font><font class="client_font">님</font>
 						<p><a href="./mypage.jsp" class="client_font" style="color:#6392ba;font-weight:bold;">마이페이지</a><p>

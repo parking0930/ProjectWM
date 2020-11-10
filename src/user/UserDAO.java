@@ -151,13 +151,13 @@ public class UserDAO {
 		}
 	}
 	public ArrayList<String> getBoardData(String board) {
-		String sql = "SELECT id, title, writer, date FROM "+board+" ORDER BY id DESC";
+		String sql = "SELECT id, title, writer, date, view FROM "+board+" ORDER BY id DESC";
 		try {
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			ArrayList<String> userList = new ArrayList<String>();
 			while(rs.next()) {
-				userList.add(rs.getString(1)+"|"+rs.getString(2)+"|"+rs.getString(3)+"|"+rs.getString(4));
+				userList.add(rs.getString(1)+"|"+rs.getString(2)+"|"+rs.getString(3)+"|"+rs.getString(4)+"|"+rs.getString(5));
 			}
 			
 			return userList;
@@ -166,20 +166,62 @@ public class UserDAO {
 			return null;
 		}
 	}
+	public String getBoardContentsData(String board, String id) {
+		String sql = "SELECT id, title, contents, writer, date, view FROM "+board+" WHERE id=?";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();
+			String bData = "";
+			while(rs.next()) {
+				bData = rs.getString(1)+"|"+rs.getString(2)+"|"+rs.getString(3)+"|"+rs.getString(4)+"|"+rs.getString(5)+"|"+rs.getString(6);
+			}
+			return bData;
+		}catch(Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	public String getLevelProfile(String nickname) {
+		String sql = "SELECT level, profile FROM wmusers WHERE nickname=?";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, nickname);
+			rs = pstmt.executeQuery();
+			String bData = "";
+			while(rs.next()) {
+				bData = rs.getString(1)+"|"+rs.getString(2);
+			}
+			return bData;
+		}catch(Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 	public ArrayList<String> getMainBoardData(String board) {
-		String sql = "SELECT title, date FROM "+board+" ORDER BY id DESC LIMIT 8";
+		String sql = "SELECT id, title, date FROM "+board+" ORDER BY id DESC LIMIT 8";
 		try {
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			ArrayList<String> userList = new ArrayList<String>();
 			while(rs.next()) {
-				userList.add(rs.getString(1)+"|"+rs.getString(2));
+				userList.add(rs.getString(1)+"|"+rs.getString(2)+"|"+rs.getString(3));
 			}
 			
 			return userList;
 		}catch(Exception e) {
 			e.printStackTrace();
 			return null;
+		}
+	}
+	public void updateView(String board, String id) {
+		String sql = "UPDATE "+board+" SET view=view+1 WHERE id=?";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			pstmt.executeUpdate();
+		}catch(Exception e) {
+			e.printStackTrace();
 		}
 	}
 }

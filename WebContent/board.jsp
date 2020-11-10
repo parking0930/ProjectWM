@@ -74,9 +74,10 @@
 					<table style="border-collapse:collapse;">
 						<tr>
 							<td class="board_table_top" style="width:60px;">번호</td>
-							<td class="board_table_top" style="width:390px;">제목</td>
-							<td class="board_table_top" style="width:100px;">작성자</td>
-							<td class="board_table_top" style="width:130px;">작성일</td>
+							<td class="board_table_top" style="width:340px;">제목</td>
+							<td class="board_table_top" style="width:110px;">작성자</td>
+							<td class="board_table_top" style="width:90px;">작성일</td>
+							<td class="board_table_top" style="width:80px;">조회</td>
 						</tr>
 						<!-- 12개 최대 -->
 					<%if(boardArray.size()>0){
@@ -84,17 +85,24 @@
 							if((Integer.parseInt(nowPage)*12)-11+i>boardArray.size())
 								break;
 							String[] s = boardArray.get((Integer.parseInt(nowPage)*12)-12+i).split("\\|");
+							SimpleDateFormat tmpSdf = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+							String WDate = tmpSdf.format(tmpSdf.parse(s[3])).split(" ")[1];
 							s[3] = s[3].split(" ")[0];
 					%>
 						<tr>
 							<td class="board_t"><%=s[0] %></td>
-							<td class="board_t"><%=s[1] %>
+							<td class="board_t"><a href="./boardContents.jsp?board=<%=id%>&id=<%=s[0]%>"><%=s[1] %></a>
 							<%if(sdf.format(date).equals(s[3])){ %>
 								<img style="width:10px;height:10px;" src="image/new.png">
 							<%}%>
 							</td>
 							<td class="board_t"><%=s[2] %></td>
+							<%if(sdf.format(date).equals(s[3])){ %>
+							<td class="board_t"><%=WDate%></td>
+							<%}else{%>
 							<td class="board_t"><%=s[3] %></td>
+							<%} %>
+							<td class="board_t"><%=s[4]%></td>
 						</tr>
 						<%}
 					}%>
