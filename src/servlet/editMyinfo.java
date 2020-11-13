@@ -14,6 +14,7 @@ import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 import user.UserDAO;
+import userinfo.Member;
 
 @WebServlet("/editMyinfo")
 public class editMyinfo extends HttpServlet {
@@ -49,7 +50,11 @@ public class editMyinfo extends HttpServlet {
 		if(filename==null) filename = request.getSession().getAttribute("profile").toString();
 		
 		UserDAO user = new UserDAO();
-		user.updateUserInfo(request.getSession().getAttribute("id").toString(), pw, filename);
+		Member userinfo = new Member();
+		userinfo.setId(request.getSession().getAttribute("id").toString());
+		userinfo.setPw(pw);
+		userinfo.setProfile(filename);
+		user.updateUserInfo(userinfo);
 		
 		PrintWriter writer = new PrintWriter(response.getWriter());
 		request.getSession().invalidate();

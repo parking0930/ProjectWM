@@ -1,3 +1,4 @@
+<%@page import="boardinfo.Board"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.util.ArrayList"%>
@@ -16,43 +17,39 @@
 	<%
 		Date date = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		String id = request.getParameter("id");
-		String nowPage = request.getParameter("page");
-		String boardName = "";
-		String boardIntro = "";
-		String gm;
+		Board board = new Board();
+		String id = request.getParameter("id")==null?"free":request.getParameter("id");
+		String nowPage = request.getParameter("page")==null ? "1":request.getParameter("page");
+		String gm = session.getAttribute("gm")==null ? "":session.getAttribute("gm").toString();
 		UserDAO user = new UserDAO();
-		id = id==null ? "free":id;
-		nowPage = nowPage==null ? "1":nowPage;
-		gm = session.getAttribute("gm")==null ? "":session.getAttribute("gm").toString();
 		switch(id){
 			case "free":
-				boardName="자유게시판";
-				boardIntro = "자유롭게 글을 쓸 수 있는 게시판입니다.";
+				board.setName("자유게시판");
+				board.setIntro("자유롭게 글을 쓸 수 있는 게시판입니다.");
 				break;
 			case "tactic":
-				boardName="공략게시판";
-				boardIntro = "게임 공략을 작성할 수 있는 게시판입니다.";
+				board.setName("공략게시판");
+				board.setIntro("게임 공략을 작성할 수 있는 게시판입니다.");
 				break;
 			case "screenshot":
-				boardName="스크린샷";
-				boardIntro = "게임 스크린샷을 올릴 수 있는 게시판입니다.";
+				board.setName("스크린샷");
+				board.setIntro("게임 스크린샷을 올릴 수 있는 게시판입니다.");
 				break;
 			case "notice":
-				boardName="공지사항";
-				boardIntro = "각종 소식을 받아 볼 수 있는 공지사항 게시판입니다.";
+				board.setName("공지사항");
+				board.setIntro("각종 소식을 받아 볼 수 있는 공지사항 게시판입니다.");
 				break;
 			case "event":
-				boardName="이벤트";
-				boardIntro = "이벤트 소식을 받아볼 수 있는 게시판입니다.";
+				board.setName("이벤트");
+				board.setIntro("이벤트 소식을 받아볼 수 있는 게시판입니다.");
 				break;
 			default:
-				id = "free";
-				boardName="자유게시판";
-				boardIntro = "자유롭게 글을 쓸 수 있는 게시판입니다.";
+				board.setName("자유게시판");
+				board.setIntro("자유롭게 글을 쓸 수 있는 게시판입니다.");
 				break;
 		}
-		ArrayList<String> boardArray = user.getBoardData("b_"+id);
+		board.setDb_name("b_"+id);
+		ArrayList<Board> boardArray = user.getBoardData(board.getDb_name());
 		int pageCount = boardArray.size()<=12 ? 1:(boardArray.size()/12)+1;
 		int startPageNum = 1;
 		int endPageNum = 1;
@@ -60,15 +57,15 @@
 	<jsp:include page="header.jsp"/><br>
 	<jsp:include page="menubar.jsp"/><br>
 	<div id="center_contents">
-		<%if(id.equals("notice") || id.equals("event")){ %>
+		<%if(board.getName().equals("공지사항") || board.getName().equals("이벤트")){ %>
 		<jsp:include page="left2.jsp"/>
 		<%}else{ %>
 		<jsp:include page="left.jsp"/>
 		<%} %>
 		<div id="right_contents">
 			<div id="board_div">
-				<font style="font-weight:bold;font-size:20px;"><%=boardName %></font>
-				<font style="font-size:13px;"> - <%=boardIntro %></font>
+				<font style="font-weight:bold;font-size:20px;"><%=board.getName() %></font>
+				<font style="font-size:13px;"> - <%=board.getIntro() %></font>
 				<hr>
 				<div id="table_wrap">
 					<table style="border-collapse:collapse;">
@@ -84,32 +81,35 @@
 						for(int i=0;i<12;i++){
 							if((Integer.parseInt(nowPage)*12)-11+i>boardArray.size())
 								break;
-							String[] s = boardArray.get((Integer.parseInt(nowPage)*12)-12+i).split("\\|");
-							SimpleDateFormat tmpSdf = new SimpleDateFormat("yyyy-MM-dd hh:mm");
-							String WDate = tmpSdf.format(tmpSdf.parse(s[3])).split(" ")[1];
-							s[3] = s[3].split(" ")[0];
+							Board tmpBoard = boardArray.get((Integer.parseInt(nowPage)*12)-12+i);
+							String commentSize = user.getCommentCount(tmpBoard);
+							SimpleDateFormat tmpSdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+							String dateStr = tmpSdf.format(tmpSdf.parse(tmpBoard.getDate())).split(" ")[0];
+							String timeStr = tmpSdf.format(tmpSdf.parse(tmpBoard.getDate())).split(" ")[1];
 					%>
 						<tr>
-							<td class="board_t"><%=s[0] %></td>
-							<td class="board_t"><a href="./boardContents.jsp?board=<%=id%>&id=<%=s[0]%>"><%=s[1] %></a>
-							<%if(sdf.format(date).equals(s[3])){ %>
+							<td class="board_t"><%=tmpBoard.getId() %></td>
+							<td class="board_t">
+								<a href="./boardContents.jsp?board=<%=id%>&id=<%=tmpBoard.getId()%>"><%=tmpBoard.getTitle() %></a>
+								[<%=commentSize%>]
+							<%if(sdf.format(date).equals(dateStr)){ %>
 								<img style="width:10px;height:10px;" src="image/new.png">
 							<%}%>
 							</td>
-							<td class="board_t"><%=s[2] %></td>
-							<%if(sdf.format(date).equals(s[3])){ %>
-							<td class="board_t"><%=WDate%></td>
+							<td class="board_t"><%=tmpBoard.getWriter() %></td>
+							<%if(sdf.format(date).equals(dateStr)){ %>
+							<td class="board_t"><%=timeStr%></td>
 							<%}else{%>
-							<td class="board_t"><%=s[3] %></td>
+							<td class="board_t"><%=dateStr %></td>
 							<%} %>
-							<td class="board_t"><%=s[4]%></td>
+							<td class="board_t"><%=tmpBoard.getView()%></td>
 						</tr>
 						<%}
 					}%>
 					</table>
 				</div>
 				<div id="board_button">
-				<%if(id.equals("notice") || id.equals("event")){
+				<%if(board.getName().equals("공지사항") || board.getName().equals("이벤트")){
 					if(gm.equals("1")){
 				%>
 					<button class="btns" type="button">글쓰기</button>
@@ -124,13 +124,15 @@
 				<div id="board_numbering">
 					<%if(pageCount>=5){
 						for(int i=1;i<=pageCount;i+=5){
-							if(Integer.parseInt(nowPage)>=i && Integer.parseInt(nowPage)<=i+5){
+							if(Integer.parseInt(nowPage)>=i && Integer.parseInt(nowPage)<=i+4){
 								startPageNum = i;
 								break;
 							}
 						}
 					%>
-					<font><</font>
+					<%if(startPageNum!=1){ %>
+					<a href="./board.jsp?id=<%=id%>&page=<%=startPageNum-1%>"><</a>
+					<%} %>
 					<%
 						for(int i=0;i<5;i++){
 							endPageNum = startPageNum+i;
@@ -141,8 +143,12 @@
 							<%}	else{%>
 								<a href="./board.jsp?id=<%=id%>&page=<%=endPageNum%>"><%=endPageNum%></a>
 							<%}
-						}
-					}else{
+						}%>
+					<%if(endPageNum-1!=pageCount){
+						%>
+					<a href="./board.jsp?id=<%=id%>&page=<%=endPageNum+1%>">></a>
+					<%} %>
+					<%}else{
 						for(int i=0;i<5;i++){
 							endPageNum = startPageNum+i;
 							if(endPageNum>pageCount)

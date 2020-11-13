@@ -1,3 +1,4 @@
+<%@page import="userinfo.Member"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="user.UserDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -15,7 +16,7 @@
 	<jsp:include page="menubar.jsp"/><br>
 	<%
 		UserDAO user = new UserDAO();
-		ArrayList<String> userList = user.userRanking();
+		ArrayList<Member> userList = user.userRanking();
 	%>
 	<div id="center_contents">
 		<h2>유저 랭킹</h2>
@@ -32,8 +33,7 @@
 			<div style="overflow-y:scroll;height:400px;">
 				<table style="border-collapse:collapse;">
 				<% for(int i=0;i<userList.size();i++){ 
-					String[] userData = userList.get(i).split("\\|");
-					userData[2] = userData[2].split(" ")[0];
+					Member userinfo = userList.get(i);
 				%>
 					<tr class="tr_style">
 					<%if(i<3){ %>
@@ -41,10 +41,10 @@
 					<%}else{ %>
 						<td style="width:110px;"><%=i+1 %></td>
 					<%} %>
-						<td style="width:195px;"><%=userData[0] %></td>
-						<td style="width:120px;">Lv.<%=userData[3] %></td>
-						<td style="width:120px;"><%=userData[1] %>P</td>
-						<td style="width:155px;"><%=userData[2] %></td>
+						<td style="width:195px;"><%=userinfo.getNickname() %></td>
+						<td style="width:120px;">Lv.<%=userinfo.getLevel() %></td>
+						<td style="width:120px;"><%=userinfo.getPoint() %>P</td>
+						<td style="width:155px;"><%=userinfo.getDate().split(" ")[0] %></td>
 					</tr>
 					<%}%>
 				</table>

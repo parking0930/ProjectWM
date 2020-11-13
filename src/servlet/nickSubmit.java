@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import user.UserDAO;
+import userinfo.Member;
 
 @WebServlet("/nickSubmit")
 public class nickSubmit extends HttpServlet {
@@ -26,7 +27,10 @@ public class nickSubmit extends HttpServlet {
 		UserDAO user = new UserDAO();
 		PrintWriter writer = response.getWriter();
 		if(!changeNick.equals("") && user.checkNickname(changeNick) && point>=100) { // 사용 가능한 닉네임이면
-			user.updateNickname(request.getSession().getAttribute("id").toString(), changeNick);
+			Member userinfo = new Member();
+			userinfo.setId(request.getSession().getAttribute("id").toString());
+			userinfo.setNickname(changeNick);
+			user.updateNickname(userinfo);
 			request.getSession().invalidate();
 			writer.println("<script>alert('닉네임 변경이 완료되었습니다.\\n 재로그인 부탁드립니다.'); location.href='./index.jsp';</script>");
 		}else {

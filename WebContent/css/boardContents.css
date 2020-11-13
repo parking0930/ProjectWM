@@ -101,7 +101,7 @@ font{
 .comments_textarea{
 	float:left;
 	width:680px;
-	padding:5px;
+	padding: 5px 15px 5px 15px;
 }
 .comments_img_div{
 	float:left;
@@ -110,7 +110,7 @@ font{
 	padding-bottom:0px;
 }
 .comments_img{
-	width:25px;
-	height:25px;
+	width:40px;
+	height:40px;
 	border-radius:50%;
 }

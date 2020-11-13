@@ -1,3 +1,4 @@
+<%@page import="boardinfo.Board"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.util.ArrayList"%>
@@ -17,8 +18,8 @@
 	<jsp:include page="menubar.jsp"/><br>
 	<%
 		UserDAO user = new UserDAO();
-		ArrayList<String> noticeArray = user.getMainBoardData("b_notice");
-		ArrayList<String> freeArray = user.getMainBoardData("b_free");
+		ArrayList<Board> notice = user.getMainBoardData("b_notice");
+		ArrayList<Board> free = user.getMainBoardData("b_free");
 		Date date = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 	%>
@@ -34,11 +35,11 @@
 				</div>
 				<div class="board_div">
 					<!-- 게시글 내용  최대 8개 -->
-				<%for(int i=0;i<noticeArray.size();i++){
-					String[] strArr = noticeArray.get(i).split("\\|");
+				<%for(int i=0;i<notice.size();i++){
+					Board tmpBoard = notice.get(i);
 				%>
-					<p class="text_dot">· <a class="board_div_text" href="./boardContents.jsp?board=notice&id=<%=strArr[0]%>"><%=strArr[1] %></a>
-					<%if(sdf.format(date).equals(strArr[2].split(" ")[0])){ %>
+					<p class="text_dot">· <a class="board_div_text" href="./boardContents.jsp?board=notice&id=<%=tmpBoard.getId()%>"><%=tmpBoard.getTitle() %></a>
+					<%if(sdf.format(date).equals(tmpBoard.getDate().split(" ")[0])){ %>
 						<img style="width:10px;height:10px;" src="image/new.png">
 					<%}%>
 					</p>
@@ -52,11 +53,11 @@
 				</div>
 				<div class="board_div">
 					<!-- 게시글 내용  최대 8개 -->
-				<%for(int i=0;i<freeArray.size();i++){
-					String[] strArr = freeArray.get(i).split("\\|");
+				<%for(int i=0;i<free.size();i++){
+					Board tmpBoard = free.get(i);
 				%>
-					<p class="text_dot">· <a class="board_div_text" href="./boardContents.jsp?board=free&id=<%=strArr[0]%>"><%=strArr[1] %></a>
-					<%if(sdf.format(date).equals(strArr[2].split(" ")[0])){ %>
+					<p class="text_dot">· <a class="board_div_text" href="./boardContents.jsp?board=free&id=<%=tmpBoard.getId()%>"><%=tmpBoard.getTitle() %></a>
+					<%if(sdf.format(date).equals(tmpBoard.getDate().split(" ")[0])){ %>
 						<img style="width:10px;height:10px;" src="image/new.png">
 					<%}%>
 					</p>
