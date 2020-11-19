@@ -1,6 +1,6 @@
 <%@page import="userinfo.Member"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="user.UserDAO"%>
+<%@page import="dao.UserDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>

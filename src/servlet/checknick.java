@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import user.UserDAO;
+import dao.UserDAO;
 
 @WebServlet("/checknick")
 public class checknick extends HttpServlet {
@@ -26,6 +26,7 @@ public class checknick extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html;charset=utf-8");
+		request.setCharacterEncoding("UTF-8");
 		String changeNick = request.getParameter("changeNick");
 		UserDAO user = new UserDAO();
 		PrintWriter writer = response.getWriter();

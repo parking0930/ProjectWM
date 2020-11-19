@@ -19,6 +19,34 @@ public class Board {
 		this.contents = contents;
 		this.writer = writer;
 	}
+	public void setNameIntro(String board) {
+		switch(board){
+			case "free":
+				this.setName("자유게시판");
+				this.setIntro("자유롭게 글을 쓸 수 있는 게시판입니다.");
+				break;
+			case "tactic":
+				this.setName("공략게시판");
+				this.setIntro("게임 공략을 작성할 수 있는 게시판입니다.");
+				break;
+			case "screenshot":
+				this.setName("스크린샷");
+				this.setIntro("게임 스크린샷을 올릴 수 있는 게시판입니다.");
+				break;
+			case "notice":
+				this.setName("공지사항");
+				this.setIntro("각종 소식을 받아 볼 수 있는 공지사항 게시판입니다.");
+				break;
+			case "event":
+				this.setName("이벤트");
+				this.setIntro("이벤트 소식을 받아볼 수 있는 게시판입니다.");
+				break;
+			default:
+				this.setName("자유게시판");
+				this.setIntro("자유롭게 글을 쓸 수 있는 게시판입니다.");
+				break;
+		}
+	}
 	public String getDb_name() {
 		return db_name;
 	}

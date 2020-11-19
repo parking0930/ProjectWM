@@ -1,8 +1,9 @@
+<%@page import="dao.BoardDAO"%>
 <%@page import="boardinfo.Board"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="user.UserDAO"%>
+<%@page import="dao.UserDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -18,8 +19,9 @@
 	<jsp:include page="menubar.jsp"/><br>
 	<%
 		UserDAO user = new UserDAO();
-		ArrayList<Board> notice = user.getMainBoardData("b_notice");
-		ArrayList<Board> free = user.getMainBoardData("b_free");
+		BoardDAO bDAO = new BoardDAO();
+		ArrayList<Board> notice = bDAO.getMainBoardData("b_notice");
+		ArrayList<Board> free = bDAO.getMainBoardData("b_free");
 		Date date = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 	%>
@@ -87,7 +89,7 @@
 				</div>
 				<%} %>
 				<div id="gamestart_div">
-					<button type="button" id="btnGamestart">게임 시작</button>
+					<button type="button" id="btnGamestart" onclick="location.href='./WaitRoom.jsp'">게임 시작</button>
 				</div>
 			</div>
 		</div>

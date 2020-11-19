@@ -1,10 +1,11 @@
+<%@page import="dao.BoardDAO"%>
 <%@page import="commentinfo.Comment"%>
 <%@page import="userinfo.Member"%>
 <%@page import="boardinfo.Board"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="user.UserDAO"%>
+<%@page import="dao.UserDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -23,40 +24,15 @@
 		Board board = new Board();
 		ArrayList<Comment> commentList;
 		UserDAO user = new UserDAO();
+		BoardDAO bDAO = new BoardDAO();
 		board.setId(request.getParameter("id")==null ? "1":request.getParameter("id"));
 		String boardP = request.getParameter("board")==null ? "free":request.getParameter("board");
 		String gm = session.getAttribute("gm")==null ? "":session.getAttribute("gm").toString();
-		
-		switch(boardP){
-		case "free":
-			board.setName("자유게시판");
-			board.setIntro("자유롭게 글을 쓸 수 있는 게시판입니다.");
-			break;
-		case "tactic":
-			board.setName("공략게시판");
-			board.setIntro("게임 공략을 작성할 수 있는 게시판입니다.");
-			break;
-		case "screenshot":
-			board.setName("스크린샷");
-			board.setIntro("게임 스크린샷을 올릴 수 있는 게시판입니다.");
-			break;
-		case "notice":
-			board.setName("공지사항");
-			board.setIntro("각종 소식을 받아 볼 수 있는 공지사항 게시판입니다.");
-			break;
-		case "event":
-			board.setName("이벤트");
-			board.setIntro("이벤트 소식을 받아볼 수 있는 게시판입니다.");
-			break;
-		default:
-			board.setName("자유게시판");
-			board.setIntro("자유롭게 글을 쓸 수 있는 게시판입니다.");
-			break;
-		}
+		board.setNameIntro(boardP);
 		board.setDb_name("b_"+boardP);
-		user.updateView(board.getDb_name(), board.getId());
-		board = user.getBoardContentsData(board);
-		commentList = user.getComment(board);
+		bDAO.updateView(board.getDb_name(), board.getId());
+		board = bDAO.getBoardContentsData(board);
+		commentList = bDAO.getComment(board);
 		writerInfo = user.getLevelProfile(board.getWriter());
 	%>
 	<jsp:include page="header.jsp"/><br>
@@ -136,16 +112,29 @@
 		<div style="display:inline-block;width:1000px;text-align:right;">
 			<div style="display:inline-block;margin-right:10px;">
 				<%if(session.getAttribute("id")!=null && board.getWriter().equals(session.getAttribute("nickname").toString())){ %>
-				<button class="b_btns">수정</button>
-				<button class="b_btns">삭제</button>
+				<button class="b_btns" onclick="gotoEdit();">수정</button>
+				<button class="b_btns" onclick="deleteMyWrite();">삭제</button>
 				<%} %>
-				<button type="button" class="b_btns" onclick="location.href='./board.jsp?id=<%=boardP%>';">목록</button>
+				<button type="button" class="b_btns" onclick="gotoBoard();">목록</button>
 			</div>
 		</div>
 	</div><br>
 	<jsp:include page="footer.jsp"/>
 </body>
 <script type="text/javascript">
-	document.title = "<%=board.getTitle()%> : WM Projcet - <%=board.getName()%>"; 
+	document.title = "<%=board.getTitle()%> : WM Projcet - <%=board.getName()%>";
+	function deleteMyWrite(){
+		if(confirm("게시글을 삭제할까요?")){
+			location.href='./deleteMyWrite?board=<%=boardP%>&id=<%=board.getId()%>';
+		}else{
+			return;
+		}
+	}
+	function gotoBoard(){
+		location.href='./board.jsp?id=<%=boardP%>';
+	}
+	function gotoEdit(){
+		location.href='./write.jsp?board=<%=boardP%>&id=<%=board.getId()%>&edit=true';
+	}
 </script>
 </html>

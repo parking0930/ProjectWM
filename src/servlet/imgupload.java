@@ -1,41 +1,38 @@
 package servlet;
 
 import java.io.IOException;
+import java.util.Enumeration;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import commentinfo.Comment;
-import dao.BoardDAO;
-import dao.UserDAO;
+import com.oreilly.servlet.MultipartRequest;
+import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
-@WebServlet("/writeComment")
-public class writeComment extends HttpServlet {
+@WebServlet("/imgupload")
+public class imgupload extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-    public writeComment() {
+    public imgupload() {
         super();
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		return;
+		doPost(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html;charset=utf-8");
 		request.setCharacterEncoding("UTF-8");
-		BoardDAO bDAO = new BoardDAO();
-		Comment comment = new Comment();
-		String id = request.getParameter("id");
-		String board = request.getParameter("board");
-		comment.setId(id);
-		comment.setBoard("b_"+board);
-		comment.setComment(request.getParameter("comment").replace("\r\n", "<br>"));
-		comment.setWriter(request.getSession().getAttribute("nickname").toString());
-		bDAO.insertComment(comment);
-		response.sendRedirect("./boardContents.jsp?board="+board+"&id="+id);
+		String fileSave = "/upload";
+		String real = request.getServletContext().getRealPath(fileSave);
+		MultipartRequest multi = new MultipartRequest(request, real, 5*1024*1024, "utf-8", new DefaultFileRenamePolicy());
+		Enumeration files = multi.getFileNames();
+		String file = (String)files.nextElement();
+		String filename = multi.getFilesystemName(file);
 	}
 
 }

@@ -1,8 +1,9 @@
+<%@page import="dao.BoardDAO"%>
 <%@page import="boardinfo.Board"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="user.UserDAO"%>
+<%@page import="dao.UserDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -22,37 +23,13 @@
 		String nowPage = request.getParameter("page")==null ? "1":request.getParameter("page");
 		String gm = session.getAttribute("gm")==null ? "":session.getAttribute("gm").toString();
 		UserDAO user = new UserDAO();
-		switch(id){
-			case "free":
-				board.setName("자유게시판");
-				board.setIntro("자유롭게 글을 쓸 수 있는 게시판입니다.");
-				break;
-			case "tactic":
-				board.setName("공략게시판");
-				board.setIntro("게임 공략을 작성할 수 있는 게시판입니다.");
-				break;
-			case "screenshot":
-				board.setName("스크린샷");
-				board.setIntro("게임 스크린샷을 올릴 수 있는 게시판입니다.");
-				break;
-			case "notice":
-				board.setName("공지사항");
-				board.setIntro("각종 소식을 받아 볼 수 있는 공지사항 게시판입니다.");
-				break;
-			case "event":
-				board.setName("이벤트");
-				board.setIntro("이벤트 소식을 받아볼 수 있는 게시판입니다.");
-				break;
-			default:
-				board.setName("자유게시판");
-				board.setIntro("자유롭게 글을 쓸 수 있는 게시판입니다.");
-				break;
-		}
+		BoardDAO bDAO = new BoardDAO();
+		board.setNameIntro(id);
 		board.setDb_name("b_"+id);
-		ArrayList<Board> boardArray = user.getBoardData(board.getDb_name());
-		int pageCount = boardArray.size()<=12 ? 1:(boardArray.size()/12)+1;
+		ArrayList<Board> boardArray = bDAO.getBoardData(board.getDb_name());
+		int pageCount = boardArray.size()<=12 ? 1:(boardArray.size()/12)+(boardArray.size()%12==0?0:1);
 		int startPageNum = 1;
-		int endPageNum = 1;
+		int endPageNum = 0;
 	%>
 	<jsp:include page="header.jsp"/><br>
 	<jsp:include page="menubar.jsp"/><br>
@@ -82,7 +59,7 @@
 							if((Integer.parseInt(nowPage)*12)-11+i>boardArray.size())
 								break;
 							Board tmpBoard = boardArray.get((Integer.parseInt(nowPage)*12)-12+i);
-							String commentSize = user.getCommentCount(tmpBoard);
+							String commentSize = bDAO.getCommentCount(tmpBoard);
 							SimpleDateFormat tmpSdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 							String dateStr = tmpSdf.format(tmpSdf.parse(tmpBoard.getDate())).split(" ")[0];
 							String timeStr = tmpSdf.format(tmpSdf.parse(tmpBoard.getDate())).split(" ")[1];
@@ -112,12 +89,12 @@
 				<%if(board.getName().equals("공지사항") || board.getName().equals("이벤트")){
 					if(gm.equals("1")){
 				%>
-					<button class="btns" type="button">글쓰기</button>
+					<a href="./write.jsp?board=<%=id%>"><button class="btns" type="button">글쓰기</button></a>
 				<%	}
 				}else{
 					if(session.getAttribute("id")!=null){
 				%>
-					<button class="btns" type="button">글쓰기</button>
+					<a href="./write.jsp?board=<%=id%>"><button class="btns" type="button">글쓰기</button></a>
 					<%}
 				} %>
 				</div>
@@ -144,8 +121,7 @@
 								<a href="./board.jsp?id=<%=id%>&page=<%=endPageNum%>"><%=endPageNum%></a>
 							<%}
 						}%>
-					<%if(endPageNum-1!=pageCount){
-						%>
+					<%if(endPageNum<pageCount){	%>
 					<a href="./board.jsp?id=<%=id%>&page=<%=endPageNum+1%>">></a>
 					<%} %>
 					<%}else{
