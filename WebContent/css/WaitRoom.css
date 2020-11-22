@@ -26,8 +26,34 @@ p, div{
 	padding:0;
 	margin:0;
 }
+#black_background{
+	position:absolute;
+	width:100%;
+	height:100vh;
+	opacity:0.4;
+	background:black;
+	display:none;
+}
+#popup_contents{
+	position:absolute;
+	text-align:center;
+	width:400px;
+	height:250px;
+	background:white;
+	left:50%;
+	top:50%;
+	transform:translate(-50%, -50%);
+	display:none;
+}
+#xbtn{
+	margin-right:20px;
+	margin-top:10px;
+	font-size:20px;
+	font-weight:bold;
+	cursor:pointer;
+}
 #header{
-	width:1200px;
+	width:1166px;
 	display:inline-block;
 	margin-top:20px;
 }
@@ -146,6 +172,11 @@ p, div{
 	height:465px;
 	border:1px solid silver;
 }
+#connect_count{
+	font-weight:bold;
+	color:white;
+	font-size:14px;
+}
 #connector_top{
 	text-align:left;
 	background:#485563;
@@ -161,7 +192,7 @@ p, div{
 {
 	display:inline-block;
 	width:230px;
-	background:silver;
+	background: linear-gradient( to bottom, #c2e9fb, #a1c4fd );
 	border-radius:20px;
 	margin-top:8px;
 	padding: 5px 20px 5px 20px;
@@ -176,8 +207,8 @@ p, div{
 	padding: 4px 10px 4px 10px;
 }
 #chat_inner{
-	height:390px;
-	padding-top:5px;
+	height:387px;
+	padding-top:8px;
 	overflow-y:auto;
 	border-bottom:1px solid silver;
 }
@@ -186,14 +217,35 @@ p, div{
 	margin-right:15px;
 	text-align:left;
 }
-.player_chat{
+.player_chat_my{
 	display:inline-block;
 	width:225px;
-	background:silver;
+	background-image: linear-gradient(to top, #c4c5c7 0%, #dcdddf 52%, #ebebeb 100%);
 	border-radius:10px;
 	margin-bottom:8px;
-	padding: 5px 20px 5px 20px;
+	padding: 6px 20px 6px 20px;
 	text-align:left;
+	font-size:14px;
+}
+.player_chat_you{
+	display:inline-block;
+	width:225px;
+	background: linear-gradient( to bottom, #c2e9fb, #a1c4fd );
+	border-radius:10px;
+	margin-bottom:8px;
+	padding: 6px 20px 6px 20px;
+	text-align:left;
+	font-size:14px;
+}
+.player_chat_sys{
+	display:inline-block;
+	width:225px;
+	background: linear-gradient( to bottom, #fad0c4, #ff9a9e );
+	border-radius:10px;
+	margin-bottom:8px;
+	padding: 6px 20px 6px 20px;
+	text-align:left;
+	font-size:14px;
 }
 #chat_textinput{
 	width:276px;
@@ -212,5 +264,45 @@ p, div{
 }
 #exit_btn:hover{
 	background:silver;
+	cursor:pointer;
+}
+.player_chat_img_div{
+	float:left;
+}
+.player_chat_img{
+	width:20px;
+	height:20px;
+	border-radius:50%;
+}
+.player_chat_top{
+	float:left;
+	margin-left:5px;
+	padding:1px 0px 4px 0px;
+	font-weight:bold;
+	font-size:13px;
+}
+#roomtitle_box{
+	margin-left:5px;
+	width:250px;
+	height:20px;
+}
+#roomtitle_box:focus{
+	outline:none;
+}
+#roomCreatebtn{
+	margin-top:10px;
+	width:200px;
+	height:30px;
+	font-size:13px;
+	border:0;
+	outline:0;
+	background: #485563;
+	font-weight:bold;
+	color:white;
+	border-radius:10px;
+	text-decoration:none;
+}
+#roomCreatebtn:hover{
+	background: #5a6470;
 	cursor:pointer;
 }

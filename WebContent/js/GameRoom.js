@@ -19,11 +19,11 @@ function NowTimeinit() {
 
 NowTimeinit();
 
-function showCreateRoom(){
+function showPopup(){
 	$("#black_background").fadeIn(500);
 	$("#popup_contents").fadeIn(500);
 }
-function hideCreateRoom(){
+function hidePopup(){
 	$("#black_background").fadeOut(500);
 	$("#popup_contents").fadeOut(500);
 }

@@ -89,7 +89,11 @@
 				</div>
 				<%} %>
 				<div id="gamestart_div">
+					<%if(session.getAttribute("id")==null){ %>
+					<button type="button" id="btnGamestart" onclick="alert('로그인 후 접속 가능합니다.');">게임 시작</button>
+					<%}else{ %>
 					<button type="button" id="btnGamestart" onclick="location.href='./WaitRoom.jsp'">게임 시작</button>
+					<%} %>
 				</div>
 			</div>
 		</div>

@@ -9,10 +9,23 @@
 <title>WM Project - Wait Room</title>
 </head>
 <body>
-<%
-	if(session.getAttribute("id")==null)
-		response.sendRedirect("./index.jsp");
-%>
+<%if(session.getAttribute("id")==null){%>
+	<jsp:forward page="./index.jsp"></jsp:forward>
+<%} %>
+	<div id="black_background"></div>
+	<div id="popup_contents">
+		<div style="text-align:right;">
+			<p id="xbtn" onclick="hideCreateRoom();">X</p>
+		</div>
+		<div>
+			<h3>방 만들기</h3>
+			<div>
+				<font style="font-weight:bold;">방 제목</font>
+				<input type="text" placeholder="방 제목을 입력하세요." id="roomtitle_box">
+			</div>
+			<button type="button" id="roomCreatebtn" onclick="roomCreate();">방 만들기</button>
+		</div>
+	</div>
 	<div id="header">
 		<div id="head_profile1">
 			<font style="font-weight:bold;">내 정보 |</font>
@@ -37,71 +50,28 @@
 				</tr>
 			</table>
 			<div id="table_wrap_div">
-				<table style="border-collapse:collapse;">
-					<tr class="tr_style">
+				<table id="room_board" style="border-collapse:collapse;">
+					<tbody></tbody>
+					<!-- <tr class="tr_style">
 						<td style="width:80px;">1</td>
-						<td style="width:450px;">ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ</td>
+						<td style="width:450px;"><a href="#">ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ</a></td>
 						<td style="width:170px;">운영자</td>
 						<td style="width:80px;">9/9</td>
-					</tr>
-					<tr class="tr_style">
-						<td style="width:80px;">1</td>
-						<td style="width:450px;">ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ</td>
-						<td style="width:170px;">운영자</td>
-						<td style="width:80px;">9/9</td>
-					</tr>
-					<tr class="tr_style">
-						<td style="width:80px;">1</td>
-						<td style="width:450px;">ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ</td>
-						<td style="width:170px;">운영자</td>
-						<td style="width:80px;">9/9</td>
-					</tr>
-					<tr class="tr_style">
-						<td style="width:80px;">1</td>
-						<td style="width:450px;">ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ</td>
-						<td style="width:170px;">운영자</td>
-						<td style="width:80px;">9/9</td>
-					</tr>
-					<tr class="tr_style">
-						<td style="width:80px;">1</td>
-						<td style="width:450px;">ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ</td>
-						<td style="width:170px;">운영자</td>
-						<td style="width:80px;">9/9</td>
-					</tr>
-					<tr class="tr_style">
-						<td style="width:80px;">1</td>
-						<td style="width:450px;">ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ</td>
-						<td style="width:170px;">운영자</td>
-						<td style="width:80px;">9/9</td>
-					</tr>
-					<tr class="tr_style">
-						<td style="width:80px;">1</td>
-						<td style="width:450px;">ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ</td>
-						<td style="width:170px;">운영자</td>
-						<td style="width:80px;">9/9</td>
-					</tr>
+					</tr> -->
 				</table>
 			</div>
 			<div id="left_button_div">
 				<button class="btns">새로고침</button>
-				<button class="btns">방 만들기</button>
+				<button class="btns" onclick="showCreateRoom();">방 만들기</button>
 			</div>
 		</div>
 		<div id="right_contetns">
 			<div id="connecter_div">
 				<div id="connector_top">
-					<font style="font-weight:bold;color:white;font-size:14px;"># 접속자 - 0명 </font>
+					<font id="connect_count"># 접속자 - 0명 </font>
 				</div>
 				<div id="connector_inner">
-					<div class="player_connect">· Lv.100 관리자</div>
-					<div class="player_connect">· Lv.100 관리자</div>
-					<div class="player_connect">· Lv.100 관리자</div>
-					<div class="player_connect">· Lv.100 관리자</div>
-					<div class="player_connect">· Lv.100 관리자</div>
-					<div class="player_connect">· Lv.100 관리자</div>
-					<div class="player_connect">· Lv.100 관리자</div>
-					<div class="player_connect">· Lv.100 관리자</div>
-					<div class="player_connect">· Lv.100 관리자</div>
+					<!-- div class="player_connect">· Lv.100 관리자</div> -->
 				</div>
 			</div>
 			<div id="chat_div">
@@ -109,54 +79,13 @@
 					<font style="font-weight:bold;color:white;font-size:14px;"># 채팅방 </font>
 				</div>
 				<div id="chat_inner">
+					<!--
 					<div class="player_chat_info">
 						<div style="float:left;_border:1px solid red;"><img style="width:20px;height:20px;border-radius:50%;" src="image/profile/<%=session.getAttribute("profile") %>"></div>
 						<div style="float:left;margin-left:5px;padding:1px 0px 4px 0px;font-weight:bold;font-size:13px;_border:1px solid red;">Lv.<%=session.getAttribute("level")%> <%=session.getAttribute("nickname")%></div>
 					</div>
 					<div class="player_chat">ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ</div>
-					<!-- ---------------------------------- -->
-					<div class="player_chat_info">
-						<div style="float:left;_border:1px solid red;"><img style="width:20px;height:20px;border-radius:50%;" src="image/profile/<%=session.getAttribute("profile") %>"></div>
-						<div style="float:left;margin-left:5px;padding:1px 0px 4px 0px;font-weight:bold;font-size:13px;_border:1px solid red;">Lv.<%=session.getAttribute("level")%> <%=session.getAttribute("nickname")%></div>
-					</div>
-					<div class="player_chat">ㅇㅇㅇㅇㅇ</div>
-					<!-- ---------------------------------- -->
-					<div class="player_chat_info">
-						<div style="float:left;_border:1px solid red;"><img style="width:20px;height:20px;border-radius:50%;" src="image/profile/<%=session.getAttribute("profile") %>"></div>
-						<div style="float:left;margin-left:5px;padding:1px 0px 4px 0px;font-weight:bold;font-size:13px;_border:1px solid red;">Lv.<%=session.getAttribute("level")%> <%=session.getAttribute("nickname")%></div>
-					</div>
-					<div class="player_chat">ㅇㅇㅇㅇㅇ</div>
-					<!-- ---------------------------------- -->
-					<div class="player_chat_info">
-						<div style="float:left;_border:1px solid red;"><img style="width:20px;height:20px;border-radius:50%;" src="image/profile/<%=session.getAttribute("profile") %>"></div>
-						<div style="float:left;margin-left:5px;padding:1px 0px 4px 0px;font-weight:bold;font-size:13px;_border:1px solid red;">Lv.<%=session.getAttribute("level")%> <%=session.getAttribute("nickname")%></div>
-					</div>
-					<div class="player_chat">ㅇㅇㅇㅇㅇ</div>
-					<!-- ---------------------------------- -->
-					<div class="player_chat_info">
-						<div style="float:left;_border:1px solid red;"><img style="width:20px;height:20px;border-radius:50%;" src="image/profile/<%=session.getAttribute("profile") %>"></div>
-						<div style="float:left;margin-left:5px;padding:1px 0px 4px 0px;font-weight:bold;font-size:13px;_border:1px solid red;">Lv.<%=session.getAttribute("level")%> <%=session.getAttribute("nickname")%></div>
-					</div>
-					<div class="player_chat">ㅇㅇㅇㅇㅇ</div>
-					<!-- ---------------------------------- -->
-					<div class="player_chat_info">
-						<div style="float:left;_border:1px solid red;"><img style="width:20px;height:20px;border-radius:50%;" src="image/profile/<%=session.getAttribute("profile") %>"></div>
-						<div style="float:left;margin-left:5px;padding:1px 0px 4px 0px;font-weight:bold;font-size:13px;_border:1px solid red;">Lv.<%=session.getAttribute("level")%> <%=session.getAttribute("nickname")%></div>
-					</div>
-					<div class="player_chat">ㅇㅇㅇㅇㅇ</div>
-					<!-- ---------------------------------- -->
-					<div class="player_chat_info">
-						<div style="float:left;_border:1px solid red;"><img style="width:20px;height:20px;border-radius:50%;" src="image/profile/<%=session.getAttribute("profile") %>"></div>
-						<div style="float:left;margin-left:5px;padding:1px 0px 4px 0px;font-weight:bold;font-size:13px;_border:1px solid red;">Lv.<%=session.getAttribute("level")%> <%=session.getAttribute("nickname")%></div>
-					</div>
-					<div class="player_chat">ㅇㅇㅇㅇㅇ</div>
-					<!-- ---------------------------------- -->
-					<div class="player_chat_info">
-						<div style="float:left;_border:1px solid red;"><img style="width:20px;height:20px;border-radius:50%;" src="image/profile/<%=session.getAttribute("profile") %>"></div>
-						<div style="float:left;margin-left:5px;padding:1px 0px 4px 0px;font-weight:bold;font-size:13px;_border:1px solid red;">Lv.<%=session.getAttribute("level")%> <%=session.getAttribute("nickname")%></div>
-					</div>
-					<div class="player_chat">ㅇㅇㅇㅇㅇ</div>
-					<!-- ---------------------------------- -->
+					-->
 				</div>
 				<input type="text" id="chat_textinput" placeholder="채팅을 입력하세요.">
 			</div>
@@ -167,11 +96,11 @@
 	</div>
 </body>
 <script type="text/javascript">
-	var id = <%=session.getAttribute("id").toString()%>;
-	var nickname = <%=session.getAttribute("nickname").toString()%>
-	var level = <%=session.getAttribute("level").toString()%>
-	var profile = <%=session.getAttribute("profile").toString()%>
+	var id = "<%=session.getAttribute("id").toString()%>";
+	var nickname = "<%=session.getAttribute("nickname").toString()%>";
+	var level = "<%=session.getAttribute("level").toString()%>";
+	var profile = "<%=session.getAttribute("profile").toString()%>";
 </script>
-<script type="text/javascript" src="./js/socket.js"></script>
+<script type="text/javascript" src="./js/WaitRoomSocket.js"></script>
 <script type="text/javascript" src="./js/WaitRoom.js"></script>
 </html>
