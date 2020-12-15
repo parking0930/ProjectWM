@@ -45,6 +45,7 @@ public class Register extends HttpServlet {
 		}else {
 			writer.println("<script>alert('오류 발생!'); history.go(-1);</script>");
 		}
+		user.close();
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

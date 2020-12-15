@@ -32,6 +32,7 @@ public class purchase extends HttpServlet {
 				request.getSession().setAttribute("level", Integer.toString(Integer.parseInt(level)+1));
 				request.getSession().setAttribute("point", Integer.toString(Integer.parseInt(point)-(Integer.parseInt(level)*100)));
 				writer.println("<script>alert('레벨 업이 완료되었습니다.'); location.href='./store.jsp';</script>");
+				user.close();
 			}else {
 				writer.println("<script>alert('포인트가 부족합니다.'); location.href='./store.jsp';</script>");
 			}

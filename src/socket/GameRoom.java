@@ -14,7 +14,7 @@ public class GameRoom {
 	public GameRoom() {
 		playerlist = new ArrayList<Player>();
 		nowIn = 0;
-		maxIn = 5;
+		maxIn = 2;
 	}
 
 	public String getRoomId() {

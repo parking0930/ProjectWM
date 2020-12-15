@@ -4,11 +4,11 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import boardinfo.Board;
 import commentinfo.Comment;
-import userinfo.Member;
 
 public class BoardDAO {
 	private Connection conn;
@@ -26,6 +26,16 @@ public class BoardDAO {
 			e.printStackTrace();
 		}
 	}
+	
+	public void close() {
+		try {
+			pstmt.close();
+			conn.close();
+		} catch (SQLException e) {
+			
+		}
+	}
+	
 	public ArrayList<Board> getBoardData(String bname) {
 		String sql = "SELECT id, title, writer, date, view FROM "+bname+" ORDER BY id DESC";
 		try {
@@ -42,7 +52,7 @@ public class BoardDAO {
 				board.setView(rs.getString(5));
 				boardList.add(board);
 			}
-			
+			rs.close();
 			return boardList;
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -55,7 +65,6 @@ public class BoardDAO {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, boardinfo.getId());
 			rs = pstmt.executeQuery();
-			String bData = "";
 			while(rs.next()) {
 				boardinfo.setId(rs.getString(1));
 				boardinfo.setTitle(rs.getString(2));
@@ -64,6 +73,7 @@ public class BoardDAO {
 				boardinfo.setDate(rs.getString(5));
 				boardinfo.setView(rs.getString(6));
 			}
+			rs.close();
 			return boardinfo;
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -83,7 +93,7 @@ public class BoardDAO {
 				boardinfo.setDate(rs.getString(3));
 				boardList.add(boardinfo);
 			}
-			
+			rs.close();
 			return boardList;
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -122,6 +132,7 @@ public class BoardDAO {
 			while(rs.next()) {
 				board.setId(rs.getString(1));
 			}
+			rs.close();
 			return board;
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -168,6 +179,7 @@ public class BoardDAO {
 				comment.setDate(rs.getString(3));
 				commentList.add(comment);
 			}
+			rs.close();
 			return commentList;
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -185,6 +197,7 @@ public class BoardDAO {
 			while(rs.next()) {
 				count = rs.getString(1);
 			}
+			rs.close();
 			return count;
 		}catch(Exception e) {
 			e.printStackTrace();

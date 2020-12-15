@@ -4,10 +4,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
-
-import boardinfo.Board;
-import commentinfo.Comment;
 import userinfo.Member;
 
 public class UserDAO {
@@ -23,6 +21,15 @@ public class UserDAO {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			conn = DriverManager.getConnection(dbURL, dbID, dbPW);
 		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void close() {
+		try {
+			pstmt.close();
+			conn.close();
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
@@ -55,6 +62,7 @@ public class UserDAO {
 				if(rs.getString(1).equals(pw)) return true;
 				else return false;
 			}
+			rs.close();
 			return false;
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -69,8 +77,14 @@ public class UserDAO {
 			pstmt.setString(1, nickname);
 			rs = pstmt.executeQuery();
 			
-			if(rs.next()) return false;
-			else return true;
+			if(rs.next()) {
+				rs.close();
+				return false;
+			}
+			else{
+				rs.close();
+				return true;
+			}
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -82,8 +96,14 @@ public class UserDAO {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, id);
 			rs = pstmt.executeQuery();
-			if(rs.next()) return false;
-			else return true;
+			if(rs.next()) {
+				rs.close();
+				return false;
+			}
+			else{
+				rs.close();
+				return true;
+			}
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -104,6 +124,7 @@ public class UserDAO {
 			playerInfo.setProfile(rs.getString(4));
 			playerInfo.setLevel(rs.getString(5));
 			playerInfo.setGm(rs.getString(6));
+			rs.close();
 			return playerInfo;
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -147,7 +168,7 @@ public class UserDAO {
 				userinfo.setLevel(rs.getString(4));
 				userList.add(userinfo);
 			}
-			
+			rs.close();
 			return userList;
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -176,6 +197,7 @@ public class UserDAO {
 				userinfo.setLevel(rs.getString(1));
 				userinfo.setProfile(rs.getString(2));
 			}
+			rs.close();
 			return userinfo;
 		}catch(Exception e) {
 			e.printStackTrace();

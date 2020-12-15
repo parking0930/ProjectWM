@@ -45,6 +45,8 @@ public class login extends HttpServlet {
 			response.sendRedirect("./index.jsp");
 		}
 		else writer.println("<script>alert('아이디 또는 비밀번호가 틀렸습니다.'); history.go(-1);</script>");
+		
+		user.close();
 	}
 
 }

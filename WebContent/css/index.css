@@ -89,17 +89,18 @@ a{
 	height:80px;
 }
 #btnGamestart{
-	width:310px;
+	width:315px;
 	height:80px;
 	font-size:40px;
 	font-weight:bold;
-	color:white;
-	background:black;
-	border:0;
+	color:#485563;
+	background:white;
+	border: 5px solid black;
 	outline:0;
 }
 #btnGamestart:hover{
 	cursor:pointer;
+	color:white;
 	background:gray;
 }
 #client_div{

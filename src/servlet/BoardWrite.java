@@ -41,6 +41,7 @@ public class BoardWrite extends HttpServlet {
 			bDAO.updateMyWrite(board, id);
 			response.sendRedirect("./boardContents.jsp?board="+boardName+"&id="+id);
 		}
+		bDAO.close();
 	}
 
 }

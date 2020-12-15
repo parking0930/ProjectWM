@@ -17,6 +17,7 @@
 	<%
 		UserDAO user = new UserDAO();
 		ArrayList<Member> userList = user.userRanking();
+		user.close();
 	%>
 	<div id="center_contents">
 		<h2>유저 랭킹</h2>

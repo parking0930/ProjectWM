@@ -29,6 +29,7 @@
 		board = bDAO.getBoardContentsData(board);
 		if(!session.getAttribute("nickname").toString().equals(board.getWriter()))
 			response.sendRedirect("./index.jsp");
+		bDAO.close();
 	}
 %>
 	<jsp:include page="header.jsp"/><br>

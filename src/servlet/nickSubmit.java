@@ -36,6 +36,7 @@ public class nickSubmit extends HttpServlet {
 		}else {
 			writer.println("<script>alert('닉네임 변경에 실패하였습니다.');history.go(-1);</script>");
 		}
+		user.close();
 	}
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);

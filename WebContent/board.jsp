@@ -22,7 +22,6 @@
 		String id = request.getParameter("id")==null?"free":request.getParameter("id");
 		String nowPage = request.getParameter("page")==null ? "1":request.getParameter("page");
 		String gm = session.getAttribute("gm")==null ? "":session.getAttribute("gm").toString();
-		UserDAO user = new UserDAO();
 		BoardDAO bDAO = new BoardDAO();
 		board.setNameIntro(id);
 		board.setDb_name("b_"+id);

@@ -38,6 +38,7 @@ public class deleteMyWrite extends HttpServlet {
 		}else {
 			response.sendRedirect("./index.jsp");
 		}
+		bDAO.close();
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

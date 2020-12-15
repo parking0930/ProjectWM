@@ -219,7 +219,7 @@ p, div{
 	padding: 5px 10px 5px 10px;
 }
 #chat_die_inner{
-	height:230px;
+	height:229px;
 	padding-top:8px;
 	overflow-y:auto;
 	border-bottom:1px solid silver;
@@ -229,6 +229,10 @@ p, div{
 	padding:12px 11px 12px 11px;
 	margin:0;
 	border:0;
+}
+#chat_die_textinput:focus{
+	outline:none;
+	background:silver;
 }
 #chat_die_font{
 	font-weight:bold;

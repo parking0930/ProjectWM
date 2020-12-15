@@ -66,7 +66,7 @@
 					<div class="player_chat">ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ</div>
 					-->
 				</div>
-				<input type="text" id="chat_die_textinput" placeholder="채팅을 입력하세요.">
+				<input type="text" id="chat_die_textinput" placeholder="채팅을 입력하세요." disabled>
 			</div>
 			<div id="exit_btn" onclick="location.href='./WaitRoom.jsp';">
 				<font id="exit_btn_font">나가기</font>

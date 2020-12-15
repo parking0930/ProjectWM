@@ -18,12 +18,12 @@
 	<jsp:include page="header.jsp"/><br>
 	<jsp:include page="menubar.jsp"/><br>
 	<%
-		UserDAO user = new UserDAO();
 		BoardDAO bDAO = new BoardDAO();
 		ArrayList<Board> notice = bDAO.getMainBoardData("b_notice");
 		ArrayList<Board> free = bDAO.getMainBoardData("b_free");
 		Date date = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		bDAO.close();
 	%>
 	<div id="contents">
 		<div id="image_contents">

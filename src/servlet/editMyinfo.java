@@ -59,6 +59,7 @@ public class editMyinfo extends HttpServlet {
 		PrintWriter writer = new PrintWriter(response.getWriter());
 		request.getSession().invalidate();
 		writer.println("<script>alert('변경이 완료되었습니다.\\n변경된 정보로 재로그인 부탁드립니다.'); location.href='./index.jsp';</script>");
+		user.close();
 	}
 
 }

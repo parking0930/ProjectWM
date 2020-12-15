@@ -33,6 +33,7 @@ var playerLevel = [];
 var playerNickname = [];
 var playerProfile = [];
 var fontstate = 0; // 0은 낮, 1은 밤
+var myjob = "";
 
 function onMessage(message) {
 	var eventData = getData(message.data);
@@ -85,8 +86,16 @@ function onMessage(message) {
 										chat
 									+`</div>`);
 			$('#chat_all_show').scrollTop($('#chat_all_show')[0].scrollHeight);
-		}else if(event="nowFull"){
+		}else if(event=="nowFull"){
 			location.replace("./WaitRoom.jsp");
+		}else if(event=="start"){
+			setTimeout(gameStart,1000);
+		}else if(event=="job"){
+			var textsplit = textData.split("@");
+			var receiveNick = textsplit[0];
+			if(receiveNick==nickname){
+				myjob = textsplit[1];
+			}
 		}
 	}
 }
@@ -155,6 +164,13 @@ function showNight(){
 	document.getElementById('exit_btn_font').style.color = "white";
 	document.getElementById('chat_die_top').style.background = "white";
 	document.getElementById('chat_die_font').style.color = "black";
+	setTimeout(function(){
+		sysMessage("밤이 되었습니다.");
+		$('.player_chat_top').css({color:"white"});
+		setTimeout(function(){
+			sysMessage("당신의 직업은 '"+myjob+"' 입니다.");
+		},1000);
+	},2000);
 }
 function hideNight(){
 	fontstate = 0;
@@ -166,4 +182,37 @@ function hideNight(){
 	document.getElementById('exit_btn_font').style.color = "black";
 	document.getElementById('chat_die_top').style.background = "black";
 	document.getElementById('chat_die_font').style.color = "white";
+}
+
+function gameStart(){
+	sysMessage("게임에 충분한 인원이 모였습니다.");
+	setTimeout(function(){
+		sysMessage("잠시후 게임이 시작됩니다.");
+	},2000);
+	count = 5;
+	timerId = setInterval(function(){
+		count -= 1;
+		if(count==0){
+			clearInterval(timerId);
+			$('#chat_all_show').empty();
+			setTimeout(showNight,1000);
+		}
+	}, 1000);
+}
+
+function sysMessage(msg){
+	$('#chat_all_show').append(`<div class="player_chat_info">
+										<div class="player_chat_img_div">
+											<img class="player_chat_img" src="image/profile/settings.png">
+										</div>
+										<div class="player_chat_top">
+											시스템
+										</div>
+									</div>
+									<div class="player_chat_sys">`+
+										msg
+									+`</div>`);
+	$('#chat_all_show').scrollTop($('#chat_all_show')[0].scrollHeight);
+	if(fontstate==0) $('.player_chat_top').css({color:"black"});
+	else $('.player_chat_top').css({color:"white"});
 }

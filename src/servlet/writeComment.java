@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import commentinfo.Comment;
 import dao.BoardDAO;
-import dao.UserDAO;
 
 @WebServlet("/writeComment")
 public class writeComment extends HttpServlet {
@@ -36,6 +35,7 @@ public class writeComment extends HttpServlet {
 		comment.setWriter(request.getSession().getAttribute("nickname").toString());
 		bDAO.insertComment(comment);
 		response.sendRedirect("./boardContents.jsp?board="+board+"&id="+id);
+		bDAO.close();
 	}
 
 }

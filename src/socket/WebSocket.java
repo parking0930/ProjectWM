@@ -2,11 +2,6 @@ package socket;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
-
-import javax.websocket.EncodeException;
 import javax.websocket.OnClose;
 import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
@@ -52,6 +47,24 @@ public class WebSocket {
         			this.sendMessageById(roomId, "add", roomManage.getRoomById(roomId).getNowIn()+"@"
         					+roomManage.getRoomById(roomId).getMaxIn()+"@"
         					+roomManage.getRoomById(roomId).getPlayerInfoArray().toString());
+        			if(roomManage.getRoomById(roomId).getNowIn()==roomManage.getRoomById(roomId).getMaxIn()) {
+        				// 입장 후 인원이 찼다면 게임 시작
+        				this.sendMessageById(roomId, "start", "");
+        				String[] job = new String[]{"마피아", "시민", "의사", "경찰", "시민"};
+        				for(int i=0;i<job.length;i++) // 직업 셔플
+                        {
+                            int r = (int)(Math.random()*job.length);
+                            String tmp = job[r];
+                            job[r] = job[0];
+                            job[0] = tmp;
+                        }
+        				int count = 0;
+        				for(Player p:roomManage.getRoomById(roomId).getPlayerlist()) {
+        					// 직업 배정
+        					this.sendMessageById(roomId, "job", p.getNickname()+"@"+job[count]);
+        					count++;
+        				}
+        			}
         		}
     		}
     		if(Makestate==1) { // 이번 이벤트로 방을 만들었다면 새로고침

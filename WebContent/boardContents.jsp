@@ -119,6 +119,10 @@
 			</div>
 		</div>
 	</div><br>
+	<%
+		bDAO.close();
+		user.close();
+	%>
 	<jsp:include page="footer.jsp"/>
 </body>
 <script type="text/javascript">
